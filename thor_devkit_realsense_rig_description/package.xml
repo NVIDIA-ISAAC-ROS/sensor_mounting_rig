@@ -21,7 +21,7 @@ SPDX-License-Identifier: Apache-2.0
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>thor_devkit_realsense_rig_description</name>
-  <version>4.2.0</version>
+  <version>4.3.0</version>
   <description>
     Jetson Thor developer kit RealSense mounting rig, URDF, mesh, and robot description launch file.
   </description>
