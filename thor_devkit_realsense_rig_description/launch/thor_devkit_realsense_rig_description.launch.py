@@ -16,6 +16,8 @@
 # SPDX-License-Identifier: Apache-2.0
 import isaac_ros_launch_utils as lu
 from launch import LaunchDescription
+from launch.conditions import UnlessCondition
+from launch.substitutions import OrSubstitution
 
 
 def generate_launch_description() -> LaunchDescription:
@@ -27,8 +29,16 @@ def generate_launch_description() -> LaunchDescription:
                  choices=['d435', 'd455'], cli=True)
     actions = args.get_launch_actions()
 
+    is_d435 = lu.is_equal(args.camera_model, 'd435')
+    is_d455 = lu.is_equal(args.camera_model, 'd455')
+    actions.append(
+        lu.assert_condition(
+            f'Unsupported camera_model: "{args.camera_model}". '
+            'Supported models are: d435, d455.',
+            UnlessCondition(OrSubstitution(is_d435, is_d455))))
+
     nominals_file = lu.if_else_substitution(
-        lu.is_equal(args.camera_model, 'd435'),
+        is_d435,
         'urdf/thor_devkit_realsense_rig_d435.urdf.xacro',
         'urdf/thor_devkit_realsense_rig_d455.urdf.xacro')
 
